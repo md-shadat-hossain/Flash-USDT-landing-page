@@ -56,7 +56,7 @@
         </div>
         <span class="text-lg sm:text-xl font-bold gradient-text">Flash USDT</span>
       </a>
-      <nav class="hidden md:flex items-center gap-8">
+      <nav class="hidden md:flex items-center gap-6">
         <a href="#features" class="text-muted-foreground hover:text-foreground transition-colors text-sm">Features</a>
         <a href="#pricing" class="text-muted-foreground hover:text-foreground transition-colors text-sm">Pricing</a>
         <a href="#how-it-works" class="text-muted-foreground hover:text-foreground transition-colors text-sm">How It Works</a>
@@ -1012,6 +1012,7 @@
           <a href="#faq" class="text-sm text-muted-foreground hover:text-foreground transition-colors">FAQ</a>
           <a href="about.html" class="text-sm text-muted-foreground hover:text-foreground transition-colors">About</a>
           <a href="blog.html" class="text-sm text-muted-foreground hover:text-foreground transition-colors">Blog</a>
+          <a href="contact.html" class="text-sm text-muted-foreground hover:text-foreground transition-colors">Contact</a>
         </div>
         <p class="text-sm text-muted-foreground">2025 Flash USDT. All rights reserved.</p>
       </div>
@@ -1330,6 +1331,141 @@
         setTimeout(loop, 3 * 60 * 1000);
       }, 3000);
     })();
+  </script>
+
+  <!-- ===== Scroll Animations ===== -->
+  <script>
+  (function(){
+    /* ── observer ─────────────────────────────── */
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting) return;
+        var el = e.target;
+        setTimeout(function(){
+          el.style.transition = 'opacity .72s cubic-bezier(.22,1,.36,1), transform .72s cubic-bezier(.22,1,.36,1)';
+          el.style.opacity    = '1';
+          el.style.transform  = 'none';
+        }, el._saDelay || 0);
+        io.unobserve(el);
+      });
+    }, {threshold: 0.12, rootMargin: '0px 0px -32px 0px'});
+
+    /* ── helpers ──────────────────────────────── */
+    function reg(el, type, delay){
+      if(!el || el._sa) return;
+      el._sa = true; el._saDelay = delay || 0;
+      el.style.opacity = '0';
+      if(type==='up')    el.style.transform = 'translateY(38px)';
+      if(type==='left')  el.style.transform = 'translateX(-38px)';
+      if(type==='right') el.style.transform = 'translateX(38px)';
+      if(type==='scale') el.style.transform = 'scale(0.91) translateY(18px)';
+      io.observe(el);
+    }
+    function regList(nodes, type, stagger){
+      Array.from(nodes||[]).forEach(function(el,i){ reg(el, type, i*(stagger||0)); });
+    }
+    /* fires immediately (above-fold hero) */
+    function regNow(el, type, delay){
+      if(!el || el._sa) return;
+      el._sa = true;
+      el.style.opacity = '0';
+      if(type==='up')    el.style.transform = 'translateY(38px)';
+      if(type==='right') el.style.transform = 'translateX(38px)';
+      setTimeout(function(){
+        el.style.transition = 'opacity .85s cubic-bezier(.22,1,.36,1), transform .85s cubic-bezier(.22,1,.36,1)';
+        el.style.opacity = '1'; el.style.transform = 'none';
+      }, delay||0);
+    }
+
+    /* ── 1. Hero (above fold — trigger immediately) ── */
+    var hero = document.querySelector('section.min-h-screen');
+    if(hero){
+      var hGrid = hero.querySelector('.grid');
+      if(hGrid){
+        regNow(hGrid.children[0], 'up',    120);
+        regNow(hGrid.children[1], 'right', 340);
+      }
+    }
+
+    /* ── 2. Features section ── */
+    var feat = document.querySelector('#features');
+    if(feat){
+      reg(feat.querySelector('header'), 'up', 0);
+      regList(feat.querySelectorAll('.glass-card'), 'up', 100);
+    }
+
+    /* ── 3. Pricing section ── */
+    var pric = document.querySelector('#pricing');
+    if(pric){
+      reg(pric.querySelector('header'), 'up', 0);
+      var pGrid = pric.querySelector('[style*="auto-fit"]');
+      if(pGrid) regList(pGrid.children, 'scale', 80);
+    }
+
+    /* ── 4. How It Works ── */
+    var how = document.querySelector('#how-it-works');
+    if(how){
+      reg(how.querySelector('header'), 'up', 0);
+      regList(how.querySelectorAll('.grid > div'), 'up', 120);
+    }
+
+    /* ── 5. Real-Time Activity ── */
+    var txEl = document.querySelector('#tx-box');
+    if(txEl){
+      var rtWrap = txEl.closest('section').querySelector('.max-w-3xl');
+      reg(rtWrap, 'up', 0);
+    }
+
+    /* ── 6. Order Customers ── */
+    var ocTrack = document.querySelector('#oc-track');
+    if(ocTrack){
+      var ocSec = ocTrack.closest('section');
+      reg(ocSec.querySelector('.text-center'), 'up',  0);
+      reg(ocSec.querySelector('.relative'),    'up', 160);
+    }
+
+    /* ── 7. Testimonials ── */
+    document.querySelectorAll('section').forEach(function(sec){
+      if(!sec.querySelector('h2')) return;
+      if(sec.querySelector('h2').textContent.indexOf('Customer Reviews')<0) return;
+      reg(sec.querySelector('header'), 'up', 0);
+      regList(sec.querySelectorAll('.grid > div'), 'up', 110);
+      var statsRow = sec.querySelector('.mt-10, .mt-16');
+      reg(statsRow, 'up', 340);
+    });
+
+    /* ── 8. FAQ ── */
+    var faq = document.querySelector('#faq');
+    if(faq){
+      reg(faq.querySelector('header'), 'up', 0);
+      regList(faq.querySelectorAll('details'), 'left', 75);
+    }
+
+    /* ── 9. CTA "Ready to Buy" ── */
+    document.querySelectorAll('section').forEach(function(sec){
+      var h2 = sec.querySelector('h2');
+      if(h2 && h2.textContent.indexOf('Ready to Buy')>-1){
+        reg(sec.querySelector('.glass-card'), 'scale', 0);
+      }
+    });
+
+    /* ── 10. Share section ── */
+    document.querySelectorAll('section').forEach(function(sec){
+      var h3 = sec.querySelector('h3');
+      if(h3 && h3.textContent.indexOf('Share With Friends')>-1){
+        reg(sec.querySelector('.max-w-7xl'), 'up', 0);
+      }
+    });
+
+    /* ── 11. Newsletter ── */
+    document.querySelectorAll('section').forEach(function(sec){
+      if(sec.querySelector('input[type="email"]')){
+        var card = sec.querySelector('.glass-card');
+        reg(card, 'scale', 0);
+      }
+    });
+
+  })();
   </script>
 
 </body>
