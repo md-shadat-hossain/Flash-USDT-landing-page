@@ -36,6 +36,8 @@
     .glow-effect { box-shadow: 0 0 40px hsl(174 72% 50% / .25); }
     .hero-gradient { background: radial-gradient(ellipse at top, hsl(174 72% 50% / .15), transparent 60%); }
     @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+    @keyframes zoom-pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+    .zoom-pulse { animation: zoom-pulse 2.5s ease-in-out infinite; display: inline-block; }
     @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
     @keyframes gradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
     details summary::-webkit-details-marker { display: none; }
@@ -62,6 +64,17 @@
         <a href="about.html" class="text-muted-foreground hover:text-foreground transition-colors text-sm">About</a>
         <a href="blog.html" class="text-muted-foreground hover:text-foreground transition-colors text-sm">Blog</a>
       </nav>
+      <!-- Live Date & Time -->
+      <div class="hidden lg:flex items-center gap-4 text-sm text-muted-foreground">
+        <div class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span id="nav-date"></span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span id="nav-time"></span>
+        </div>
+      </div>
       <a href="#pricing" class="hidden sm:inline-block bg-gradient-to-r from-cyan-500 to-blue-500 text-background font-bold px-6 py-2.5 rounded-lg hover:shadow-[0_0_30px_hsl(174_72%_50%_/_0.4)] hover:scale-105 transition-all text-sm">Buy Now</a>
       <button onclick="document.getElementById('mobileMenu').classList.toggle('hidden')" class="md:hidden text-muted-foreground">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -95,11 +108,11 @@
             <span class="text-xs sm:text-sm text-muted-foreground">The Fastest USDT Transfer Method</span>
           </div>
           <h1 class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold mb-4 sm:mb-6 leading-tight">
-            <span class="gradient-text">Buy USDT Flash</span><br>
-            <span class="text-foreground">TRC20 Instant Transfer</span>
+            <span class="gradient-text">Buy, Trade, Sell</span><br>
+            <span class="text-foreground">Top Wanted Flash Crypto</span>
           </h1>
           <p class="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 sm:mb-10 max-w-2xl mx-auto lg:mx-0">
-            Buy USDT TRC20 flash with instant transfer to your wallet. 180-day validity, unlimited transfers, verified on Tronscan. Works with Trust Wallet, Binance, Coinbase & more.
+            Buy top wanted flash crypto (USDT, XRP, Dogecoin) instantly to your wallet.
           </p>
           <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-6 sm:mb-8">
             <a href="#pricing" class="group w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-background font-bold h-12 rounded-lg px-8 text-base hover:from-cyan-400 hover:to-blue-400 shadow-lg hover:shadow-[0_0_30px_hsl(174_72%_50%_/_0.4)] hover:scale-105 transition-all">
@@ -152,11 +165,12 @@
           <div class="relative">
             <div class="absolute -inset-4 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-3xl blur-2xl"></div>
             <div class="relative rounded-2xl sm:rounded-3xl shadow-2xl border border-border/50 max-w-[200px] sm:max-w-xs md:max-w-sm w-full bg-gradient-to-br from-cyan-500/10 to-blue-500/10 aspect-square flex items-center justify-center">
-              <div class="text-center p-8">
+              <!-- <div class="text-center p-8">
                 <svg class="w-20 h-20 mx-auto text-cyan-500/50 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                 <div class="text-2xl font-bold gradient-text">USDT Flash</div>
                 <div class="text-muted-foreground text-sm mt-1">TRC20 Network</div>
-              </div>
+              </div> -->
+              <img class="rounded-2xl" src="./dist/images/hero-wallet.jpg" alt="">
             </div>
           </div>
         </div>
@@ -176,15 +190,72 @@
       <div class="glass-card rounded-xl sm:rounded-2xl p-5 sm:p-8 mb-8">
         <div class="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16">
           <div class="text-center">
-            <div class="text-3xl sm:text-4xl font-bold gradient-text">26,000+</div>
+            <div class="text-3xl sm:text-4xl font-bold gradient-text zoom-pulse">26,000+</div>
             <div class="text-muted-foreground text-sm">Successful Transactions</div>
           </div>
           <div class="text-center">
-            <div class="text-3xl sm:text-4xl font-bold gradient-text">$2.6B+</div>
+            <div class="text-3xl sm:text-4xl font-bold gradient-text zoom-pulse">$2.6B+</div>
             <div class="text-muted-foreground text-sm">USDT Processed</div>
           </div>
         </div>
       </div>
+
+      <!-- Supported Wallets -->
+      <div class="glass-card rounded-xl sm:rounded-2xl p-5 sm:p-8 mb-8">
+        <h3 class="text-center text-lg sm:text-xl font-bold mb-6"><span class="text-foreground">Supported</span> <span class="gradient-text">Wallets</span></h3>
+        <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-10">
+          <div class="flex flex-col items-center gap-2">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden p-2">
+              <img src="dist/images/wallet-trust.png" alt="Trust Wallet" class="w-full h-full object-contain">
+            </div>
+            <span class="text-muted-foreground text-xs">Trust Wallet</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden p-2">
+              <img src="dist/images/Safepal.png" alt="Safepal" class="w-full h-full object-contain">
+            </div>
+            <span class="text-muted-foreground text-xs">Safepal</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden p-2">
+              <img src="dist/images/Binance.png" alt="Binance" class="w-full h-full object-contain">
+            </div>
+            <span class="text-muted-foreground text-xs">Binance</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden p-2">
+              <img src="dist/images/Bybit.png" alt="Bybit" class="w-full h-full object-contain">
+            </div>
+            <span class="text-muted-foreground text-xs">Bybit</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden p-2">
+              <img src="dist/images/OKX.png" alt="OKX" class="w-full h-full object-contain">
+            </div>
+            <span class="text-muted-foreground text-xs">OKX</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden p-2">
+              <img src="dist/images/Coinbase.png" alt="Coinbase" class="w-full h-full object-contain">
+            </div>
+            <span class="text-muted-foreground text-xs">Coinbase</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden p-2">
+              <img src="dist/images/Bitget.png" alt="Bitget" class="w-full h-full object-contain">
+            </div>
+            <span class="text-muted-foreground text-xs">Bitget</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden p-2">
+              <img src="dist/images/Exodus.png" alt="Exodus" class="w-full h-full object-contain">
+            </div>
+            <span class="text-muted-foreground text-xs">Exodus</span>
+          </div>
+        </div>
+        <p class="text-center text-muted-foreground text-sm mt-6">and more...</p>
+      </div>
+
       <!-- Feature Cards -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         <!-- Card 1 -->
@@ -253,134 +324,171 @@
 
   <!-- Pricing Section -->
   <section id="pricing" class="py-24 relative">
-    <div class="max-w-[1600px] mx-auto px-4">
+    <div class="max-w-7xl mx-auto px-4">
       <header class="text-center mb-16">
         <h2 class="text-3xl md:text-4xl font-bold mb-4">Buy <span class="gradient-text">USDT Flash</span> Packages</h2>
         <p class="text-muted-foreground max-w-2xl mx-auto">Choose your USDT TRC20 flash package. Instant delivery, 180-day validity, unlimited transfers.</p>
-        <div class="mt-8 inline-flex flex-col sm:flex-row items-center gap-2 sm:gap-3 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl sm:rounded-full px-6 py-3">
+        <div class="mt-8 inline-flex flex-col sm:flex-row items-center gap-3 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl sm:rounded-full px-6 py-3">
           <div class="flex items-center gap-2">
-            <svg class="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            <svg class="w-5 h-5 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
             <span class="text-emerald-500 font-semibold text-sm md:text-base">24-Hour Money Back Guarantee</span>
+          </div>
+          <div class="flex items-center gap-2 sm:border-l sm:border-emerald-500/30 sm:pl-3">
+            <span class="text-muted-foreground text-sm">Contact support:</span>
+            <a href="https://wa.me/+8801757054846" target="_blank" rel="noopener" class="w-8 h-8 rounded-full bg-[#25D366]/20 hover:bg-[#25D366]/40 flex items-center justify-center transition-colors">
+              <svg class="w-4 h-4 text-[#25D366]" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+            </a>
+            <a href="https://t.me/+8801757054846" target="_blank" rel="noopener" class="w-8 h-8 rounded-full bg-[#0088cc]/20 hover:bg-[#0088cc]/40 flex items-center justify-center transition-colors">
+              <svg class="w-4 h-4 text-[#0088cc]" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            </a>
           </div>
         </div>
       </header>
-      <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3">
+      <!-- Currency Selector -->
+      <div class="flex justify-center mb-8">
+        <div class="inline-flex items-center gap-2 p-1.5 rounded-2xl" style="background:hsl(222 47% 10%/0.8);border:1px solid hsl(174 72% 50%/0.2);">
+          <button onclick="switchCurrency('usdt',this)" id="cur-usdt" class="cur-tab active-cur flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all duration-300">
+            <span class="text-base">💵</span> USDT
+          </button>
+          <button onclick="switchCurrency('xrp',this)" id="cur-xrp" class="cur-tab flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 text-muted-foreground hover:text-foreground">
+            <span class="text-base">🔷</span> XRP
+          </button>
+          <button onclick="switchCurrency('doge',this)" id="cur-doge" class="cur-tab flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 text-muted-foreground hover:text-foreground">
+            <span class="text-base">🐕</span> DOGE
+          </button>
+        </div>
+      </div>
+
+      <div class="grid gap-4 items-stretch pt-6" style="grid-template-columns: repeat(auto-fit, minmax(140px, 1fr))">
+
         <!-- Basic -->
-        <div class="relative glass-card rounded-2xl p-5 group cursor-pointer flex flex-col z-10 overflow-hidden hover:border-primary/60 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(14,203,129,0.15)] transition-all duration-500 ease-out hover:-translate-y-2">
-          <div class="text-center mb-5 relative z-10">
-            <h3 class="text-base font-semibold mb-1 group-hover:text-primary transition-colors duration-300">Basic</h3>
-            <p class="text-muted-foreground text-xs mb-3">Perfect for getting started</p>
+        <div class="relative glass-card rounded-[2rem] px-2 py-10 group cursor-pointer flex flex-col z-10 hover:border-primary/60 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(14,203,129,0.15)] transition-all duration-500 ease-out hover:-translate-y-2 min-h-[480px]">
+          <div class="text-center mb-10 relative z-10">
+            <h3 class="text-2xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">Basic</h3>
+            <p class="text-muted-foreground text-base mb-6">Perfect for getting started</p>
             <div class="flex items-baseline justify-center gap-1">
-              <span class="text-2xl font-bold gradient-text">$250</span>
-              <span class="text-muted-foreground text-xs">USDT</span>
+              <span class="price-val text-5xl font-bold gradient-text zoom-pulse" data-usdt="$250" data-xrp="100" data-doge="715">$250</span>
+              <span class="price-cur text-muted-foreground text-lg font-medium">USDT</span>
             </div>
           </div>
-          <ul class="space-y-3 mb-6 relative z-10 flex-grow">
-            <li class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><span class="text-xs font-bold gradient-text">10,000 USDT TRC20</span></li>
-            <li class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><span class="text-xs text-muted-foreground">180-day validity</span></li>
-            <li class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><span class="text-xs text-muted-foreground">Unlimited transfers</span></li>
-            <li class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><span class="text-xs text-muted-foreground">Instant delivery</span></li>
+          <ul class="space-y-3 mb-10 relative z-10 flex-grow">
+            <li class="flex items-start gap-2">
+              <div class="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3.5 h-3.5 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div>
+              <span class="text-2xl font-bold gradient-text leading-snug zoom-pulse">10,000 USDT<br>Flash TRC20</span>
+            </li>
           </ul>
-          <button onclick="openPayModal('Basic','$250','10,000 USDT TRC20')" class="w-full relative z-10 inline-flex items-center justify-center bg-secondary/40 backdrop-blur-md text-foreground border border-primary/30 hover:bg-secondary/60 font-semibold h-9 rounded-lg text-xs transition-shadow duration-300 group-hover:shadow-[0_0_20px_rgba(14,203,129,0.3)] cursor-pointer">Select Plan</button>
+          <button class="pay-btn w-full relative z-10 inline-flex items-center justify-center bg-secondary/40 backdrop-blur-md text-foreground border border-primary/30 hover:bg-secondary/60 font-semibold h-11 rounded-lg text-sm transition-shadow duration-300 group-hover:shadow-[0_0_20px_rgba(14,203,129,0.3)] cursor-pointer" data-plan="Basic" data-usdt="$250" data-xrp="100 XRP" data-doge="715 DOGE" data-amount="10,000 USDT TRC20">Select Plan</button>
         </div>
+
         <!-- Professional -->
-        <div class="relative glass-card rounded-2xl p-5 group cursor-pointer flex flex-col z-10 overflow-hidden hover:border-primary/60 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(14,203,129,0.15)] transition-all duration-500 ease-out hover:-translate-y-2">
-          <div class="text-center mb-5 relative z-10">
-            <h3 class="text-base font-semibold mb-1 group-hover:text-primary transition-colors duration-300">Professional</h3>
-            <p class="text-muted-foreground text-xs mb-3">For active traders</p>
+        <div class="relative glass-card rounded-[2rem] px-2 py-10 group cursor-pointer flex flex-col z-10 hover:border-primary/60 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(14,203,129,0.15)] transition-all duration-500 ease-out hover:-translate-y-2 min-h-[480px]">
+          <div class="text-center mb-10 relative z-10">
+            <h3 class="text-2xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">Professional</h3>
+            <p class="text-muted-foreground text-base mb-6">For active traders</p>
             <div class="flex items-baseline justify-center gap-1">
-              <span class="text-2xl font-bold gradient-text">$400</span>
-              <span class="text-muted-foreground text-xs">USDT</span>
+              <span class="price-val text-5xl font-bold gradient-text zoom-pulse" data-usdt="$400" data-xrp="160" data-doge="1,145">$400</span>
+              <span class="price-cur text-muted-foreground text-lg font-medium">USDT</span>
             </div>
           </div>
-          <ul class="space-y-3 mb-6 relative z-10 flex-grow">
-            <li class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><span class="text-xs font-bold gradient-text">20,000 USDT TRC20</span></li>
-            <li class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><span class="text-xs text-muted-foreground">180-day validity</span></li>
-            <li class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><span class="text-xs text-muted-foreground">Unlimited transfers</span></li>
-            <li class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><span class="text-xs text-muted-foreground">Instant delivery</span></li>
+          <ul class="space-y-3 mb-10 relative z-10 flex-grow">
+            <li class="flex items-start gap-2">
+              <div class="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3.5 h-3.5 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div>
+              <span class="text-2xl font-bold gradient-text leading-snug zoom-pulse">20,000 USDT<br>Flash TRC20</span>
+            </li>
           </ul>
-          <button onclick="openPayModal('Professional','$400','20,000 USDT TRC20')" class="w-full relative z-10 inline-flex items-center justify-center bg-secondary/40 backdrop-blur-md text-foreground border border-primary/30 hover:bg-secondary/60 font-semibold h-9 rounded-lg text-xs transition-shadow duration-300 group-hover:shadow-[0_0_20px_rgba(14,203,129,0.3)] cursor-pointer">Select Plan</button>
+          <button class="pay-btn w-full relative z-10 inline-flex items-center justify-center bg-secondary/40 backdrop-blur-md text-foreground border border-primary/30 hover:bg-secondary/60 font-semibold h-11 rounded-lg text-sm transition-shadow duration-300 group-hover:shadow-[0_0_20px_rgba(14,203,129,0.3)] cursor-pointer" data-plan="Professional" data-usdt="$400" data-xrp="160 XRP" data-doge="1,145 DOGE" data-amount="20,000 USDT TRC20">Select Plan</button>
         </div>
-        <!-- Premium (Popular) -->
-        <div class="relative glass-card rounded-2xl p-5 pt-7 group cursor-pointer flex flex-col glow-effect z-10 overflow-hidden transition-all duration-500 ease-out hover:-translate-y-2">
-          <div class="absolute -top-0.5 left-1/2 -translate-x-1/2 z-20">
-            <div class="bg-gradient-to-r from-cyan-500 to-blue-500 text-background text-[10px] font-semibold px-3 py-0.5 rounded-full flex items-center gap-1">
-              <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+
+        <!-- Premium (Popular) — badge sits above, z-20 so it's not covered by sibling cards -->
+        <div class="relative flex flex-col z-20 min-h-[480px]">
+          <!-- Badge sits ABOVE the card, outside it -->
+          <div class="absolute -top-5 left-1/2 -translate-x-1/2 z-30 whitespace-nowrap">
+            <div class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-xs font-bold px-4 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg">
+              <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
               Most Popular
             </div>
           </div>
-          <div class="text-center mb-5 relative z-10">
-            <h3 class="text-base font-semibold mb-1 group-hover:text-primary transition-colors duration-300">Premium</h3>
-            <p class="text-muted-foreground text-xs mb-3">Most popular plan</p>
-            <div class="flex items-baseline justify-center gap-1">
-              <span class="text-2xl font-bold gradient-text">$750</span>
-              <span class="text-muted-foreground text-xs">USDT</span>
+          <div class="glass-card rounded-[1.6rem] px-2 py-10 pt-10 group cursor-pointer flex flex-col flex-grow glow-effect transition-all duration-500 ease-out hover:-translate-y-2" style="border-color: hsl(174 72% 50% / 0.6);">
+            <div class="text-center mb-10 relative z-10">
+              <h3 class="text-2xl font-bold mb-2">Premium</h3>
+              <p class="text-muted-foreground text-base mb-6">Most popular plan</p>
+              <div class="flex items-baseline justify-center gap-1">
+                <span class="price-val text-5xl font-bold gradient-text zoom-pulse" data-usdt="$750" data-xrp="300" data-doge="2,150">$750</span>
+                <span class="price-cur text-muted-foreground text-lg font-medium">USDT</span>
+              </div>
             </div>
+            <ul class="space-y-3 mb-10 relative z-10 flex-grow">
+              <li class="flex items-start gap-2">
+                <div class="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3.5 h-3.5 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div>
+                <span class="text-2xl font-bold gradient-text leading-snug zoom-pulse">50,000 USDT<br>Flash TRC20</span>
+              </li>
+            </ul>
+            <button class="pay-btn w-full relative z-10 inline-flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold h-11 rounded-lg text-sm hover:shadow-[0_0_30px_hsl(174_72%_50%_/_0.5)] transition-all cursor-pointer" data-plan="Premium" data-usdt="$750" data-xrp="300 XRP" data-doge="2,150 DOGE" data-amount="50,000 USDT TRC20">Select Plan</button>
           </div>
-          <ul class="space-y-3 mb-6 relative z-10 flex-grow">
-            <li class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><span class="text-xs font-bold gradient-text">50,000 USDT TRC20</span></li>
-            <li class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><span class="text-xs text-muted-foreground">180-day validity</span></li>
-            <li class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><span class="text-xs text-muted-foreground">Unlimited transfers</span></li>
-            <li class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><span class="text-xs text-muted-foreground">Instant delivery</span></li>
-          </ul>
-          <button onclick="openPayModal('Premium','$750','50,000 USDT TRC20')" class="w-full relative z-10 inline-flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500 text-background font-bold h-9 rounded-lg text-xs hover:shadow-[0_0_30px_hsl(174_72%_50%_/_0.4)] transition-all cursor-pointer">Select Plan</button>
         </div>
+
         <!-- Enterprise -->
-        <div class="relative glass-card rounded-2xl p-5 group cursor-pointer flex flex-col z-10 overflow-hidden hover:border-primary/60 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(14,203,129,0.15)] transition-all duration-500 ease-out hover:-translate-y-2">
-          <div class="text-center mb-5 relative z-10">
-            <h3 class="text-base font-semibold mb-1 group-hover:text-primary transition-colors duration-300">Enterprise</h3>
-            <p class="text-muted-foreground text-xs mb-3">For businesses</p>
+        <div class="relative glass-card rounded-[2rem] px-2 py-10 group cursor-pointer flex flex-col z-10 hover:border-primary/60 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(14,203,129,0.15)] transition-all duration-500 ease-out hover:-translate-y-2 min-h-[480px]">
+          <div class="text-center mb-10 relative z-10">
+            <h3 class="text-2xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">Enterprise</h3>
+            <p class="text-muted-foreground text-base mb-6">For businesses</p>
             <div class="flex items-baseline justify-center gap-1">
-              <span class="text-2xl font-bold gradient-text">$1,200</span>
-              <span class="text-muted-foreground text-xs">USDT</span>
+              <span class="price-val text-5xl font-bold gradient-text zoom-pulse" data-usdt="$1200" data-xrp="480" data-doge="3,430">$1200</span>
+              <span class="price-cur text-muted-foreground text-lg font-medium">USDT</span>
             </div>
           </div>
-          <ul class="space-y-3 mb-6 relative z-10 flex-grow">
-            <li class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><span class="text-xs font-bold gradient-text">100,000 USDT TRC20</span></li>
-            <li class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><span class="text-xs text-muted-foreground">180-day validity</span></li>
-            <li class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><span class="text-xs text-muted-foreground">Unlimited transfers</span></li>
-            <li class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><span class="text-xs text-muted-foreground">Instant delivery</span></li>
+          <ul class="space-y-3 mb-10 relative z-10 flex-grow">
+            <li class="flex items-start gap-2">
+              <div class="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3.5 h-3.5 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div>
+              <span class="text-2xl font-bold gradient-text leading-snug zoom-pulse">100,000 USDT<br>Flash TRC20</span>
+            </li>
           </ul>
-          <button onclick="openPayModal('Enterprise','$1,200','100,000 USDT TRC20')" class="w-full relative z-10 inline-flex items-center justify-center bg-secondary/40 backdrop-blur-md text-foreground border border-primary/30 hover:bg-secondary/60 font-semibold h-9 rounded-lg text-xs transition-shadow duration-300 group-hover:shadow-[0_0_20px_rgba(14,203,129,0.3)] cursor-pointer">Select Plan</button>
+          <button class="pay-btn w-full relative z-10 inline-flex items-center justify-center bg-secondary/40 backdrop-blur-md text-foreground border border-primary/30 hover:bg-secondary/60 font-semibold h-11 rounded-lg text-sm transition-shadow duration-300 group-hover:shadow-[0_0_20px_rgba(14,203,129,0.3)] cursor-pointer" data-plan="Enterprise" data-usdt="$1,200" data-xrp="480 XRP" data-doge="3,430 DOGE" data-amount="100,000 USDT TRC20">Select Plan</button>
         </div>
+
         <!-- Ultimate -->
-        <div class="relative glass-card rounded-2xl p-5 group cursor-pointer flex flex-col z-10 overflow-hidden hover:border-primary/60 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(14,203,129,0.15)] transition-all duration-500 ease-out hover:-translate-y-2">
-          <div class="text-center mb-5 relative z-10">
-            <h3 class="text-base font-semibold mb-1 group-hover:text-primary transition-colors duration-300">Ultimate</h3>
-            <p class="text-muted-foreground text-xs mb-3">High-volume traders</p>
+        <div class="relative glass-card rounded-[2rem] px-2 py-10 group cursor-pointer flex flex-col z-10 hover:border-primary/60 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(14,203,129,0.15)] transition-all duration-500 ease-out hover:-translate-y-2 min-h-[480px]">
+          <div class="text-center mb-10 relative z-10">
+            <h3 class="text-2xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">Ultimate</h3>
+            <p class="text-muted-foreground text-base mb-6">For high-volume traders</p>
             <div class="flex items-baseline justify-center gap-1">
-              <span class="text-2xl font-bold gradient-text">$10,000</span>
-              <span class="text-muted-foreground text-xs">USDT</span>
+              <span class="price-val text-4xl font-bold gradient-text zoom-pulse" data-usdt="$10,000" data-xrp="4,000" data-doge="28,600">$10,000</span>
+              <span class="price-cur text-muted-foreground text-lg font-medium">USDT</span>
             </div>
           </div>
-          <ul class="space-y-3 mb-6 relative z-10 flex-grow">
-            <li class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><span class="text-xs font-bold gradient-text">1,000,000 USDT TRC20</span></li>
-            <li class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><span class="text-xs text-muted-foreground">180-day validity</span></li>
-            <li class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><span class="text-xs text-muted-foreground">Unlimited transfers</span></li>
-            <li class="flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><span class="text-xs text-muted-foreground">Dedicated support</span></li>
+          <ul class="space-y-3 mb-10 relative z-10 flex-grow">
+            <li class="flex items-start gap-2">
+              <div class="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3.5 h-3.5 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div>
+              <span class="text-2xl font-bold gradient-text leading-snug zoom-pulse">1,000,000 USDT<br>Flash TRC20</span>
+            </li>
           </ul>
-          <button onclick="openPayModal('Ultimate','$10,000','1,000,000 USDT TRC20')" class="w-full relative z-10 inline-flex items-center justify-center bg-secondary/40 backdrop-blur-md text-foreground border border-primary/30 hover:bg-secondary/60 font-semibold h-9 rounded-lg text-xs transition-shadow duration-300 group-hover:shadow-[0_0_20px_rgba(14,203,129,0.3)] cursor-pointer">Select Plan</button>
+          <button class="pay-btn w-full relative z-10 inline-flex items-center justify-center bg-secondary/40 backdrop-blur-md text-foreground border border-primary/30 hover:bg-secondary/60 font-semibold h-11 rounded-lg text-sm transition-shadow duration-300 group-hover:shadow-[0_0_20px_rgba(14,203,129,0.3)] cursor-pointer" data-plan="Ultimate" data-usdt="$10,000" data-xrp="4,000 XRP" data-doge="28,600 DOGE" data-amount="1,000,000 USDT TRC20">Select Plan</button>
         </div>
+
         <!-- Custom Order -->
-        <div class="relative glass-card rounded-2xl p-5 group flex flex-col hover:border-primary/60 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(14,203,129,0.15)] transition-all duration-500 ease-out hover:-translate-y-2">
-          <div class="text-center mb-5 relative z-10">
-            <h3 class="text-base font-semibold mb-1 group-hover:text-primary transition-colors duration-300">Custom Order</h3>
-            <p class="text-muted-foreground text-xs mb-3">For higher amounts</p>
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
-              <svg class="w-5 h-5 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        <div class="relative glass-card rounded-[2rem] px-2 py-10 group flex flex-col hover:border-primary/60 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(14,203,129,0.15)] transition-all duration-500 ease-out hover:-translate-y-2 min-h-[480px]">
+          <div class="text-center mb-8 relative z-10">
+            <h3 class="text-2xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">Custom<br>Order</h3>
+            <p class="text-muted-foreground text-sm mb-5">For higher amounts</p>
+            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
+              <svg class="w-7 h-7 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
             </div>
           </div>
-          <div class="space-y-2 flex-grow relative z-10">
-            <a href="https://wa.me/+8801757054846" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 bg-[#25D366]/20 hover:bg-[#25D366]/30 text-[#25D366] font-semibold py-2 px-3 rounded-lg text-xs transition-colors">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
-              WhatsApp
-            </a>
-            <a href="https://t.me/+8801757054846" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 bg-[#0088cc]/20 hover:bg-[#0088cc]/30 text-[#0088cc] font-semibold py-2 px-3 rounded-lg text-xs transition-colors">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-              Telegram
-            </a>
+          <div class="flex-grow relative z-10">
+            <p class="text-center text-muted-foreground text-sm mb-5">Contact our support for custom orders</p>
+            <div class="space-y-2">
+              <a href="https://wa.me/+8801757054846" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-semibold py-2.5 px-3 rounded-lg text-sm transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+                WhatsApp
+              </a>
+              <a href="https://t.me/+8801757054846" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 bg-[#0088cc] hover:bg-[#0077bb] text-white font-semibold py-2.5 px-3 rounded-lg text-sm transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                Telegram
+              </a>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
@@ -430,6 +538,207 @@
       </div>
     </div>
   </section>
+
+  <!-- Real-Time Activity -->
+  <section class="py-20 relative">
+    <div class="max-w-3xl mx-auto px-4">
+      <div class="text-center mb-10">
+        <div class="inline-flex items-center gap-2 mb-4">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span id="tx-date-range" class="text-emerald-500 text-xs font-bold tracking-widest uppercase"></span>
+        </div>
+        <h2 class="text-3xl md:text-4xl font-bold"><span class="gradient-text">Real-Time</span> Activity</h2>
+      </div>
+
+      <div id="tx-box" style="background:hsl(222 47% 8%/0.9);border:1px solid hsl(222 47% 22%/0.7);border-radius:1.25rem;padding:1rem;overflow:hidden;transition:background 0.3s ease,border-color 0.3s ease;">
+        <ul id="tx-list" class="flex flex-col gap-0"></ul>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    @keyframes tx-in    { from { opacity:0; transform:translateY(-24px) scaleY(.9); } to { opacity:1; transform:translateY(0) scaleY(1); } }
+    @keyframes tx-out   { from { opacity:1; transform:translateY(0) scaleY(1); }    to { opacity:0; transform:translateY(24px) scaleY(.9); } }
+    @keyframes tx-flash { 0% { background:hsl(142 70% 40%/0); } 15% { background:hsl(142 70% 40%/0.22); } 100% { background:hsl(142 70% 40%/0); } }
+    .tx-enter { animation: tx-in .5s cubic-bezier(.34,1.56,.64,1) forwards, tx-flash 2s ease-out forwards; border-radius: 0.6rem; }
+    .tx-leave { animation: tx-out .4s ease-in forwards; pointer-events:none; }
+  </style>
+
+  <script>
+    (function(){
+      const countries = ['IT','AE','ZA','NL','CN','US','GB','DE','FR','JP','BR','CA','AU','SG','IN','MX','TR','NG','PH','KR'];
+      const amounts   = ['+10K USDT','+20K USDT','+50K USDT','+100K USDT','+1M USDT'];
+      const chars     = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz123456789';
+
+      function randChar(){ return chars[Math.floor(Math.random()*chars.length)]; }
+      function randStr(n){ return Array.from({length:n},randChar).join(''); }
+      function fakeWallet(){ return randStr(6)+'...'+randStr(4); }
+      function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+      function setDateRange(){
+        const now   = new Date();
+        const from  = new Date(now); from.setDate(from.getDate()-31);
+        const fmt   = d => d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}).toUpperCase();
+        document.getElementById('tx-date-range').textContent = 'LAST TRANSACTIONS ('+fmt(from)+' - '+fmt(now)+')';
+      }
+
+      function createRow(){
+        const country = pick(countries);
+        const wallet  = fakeWallet();
+        const amount  = pick(amounts);
+        const li = document.createElement('li');
+        li.className = 'tx-enter';
+        li.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.25rem;border-bottom:1px solid hsl(222 47% 20%/0.6);';
+        li.innerHTML = `
+          <div style="display:flex;align-items:center;gap:1rem;">
+            <div style="width:2.6rem;height:2.6rem;border-radius:50%;background:hsl(142 70% 40%/0.18);border:2px solid hsl(142 70% 45%/0.5);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg style="width:1.1rem;height:1.1rem;color:#4ade80;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.8" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+              <span style="font-weight:700;font-size:1rem;color:#f1f5f9;">customer</span>
+              <span style="font-size:0.85rem;color:#94a3b8;">(IP <sup style="font-weight:800;font-size:0.7rem;color:#f1f5f9;letter-spacing:0.05em;">${country}</sup>)</span>
+              <span style="color:#64748b;font-size:1rem;">→</span>
+              <span style="font-family:monospace;font-size:0.85rem;color:#64748b;">${wallet}</span>
+            </div>
+          </div>
+          <span style="background:linear-gradient(135deg,hsl(174,72%,50%),hsl(199,89%,48%));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:800;font-size:1.1rem;white-space:nowrap;">${amount}</span>`;
+        return li;
+      }
+
+      const list   = document.getElementById('tx-list');
+      const MAX    = 5;
+
+      function addRow(){
+        // remove all items beyond MAX-1 first, so after prepend total = MAX
+        while(list.children.length >= MAX){
+          const last = list.lastElementChild;
+          last.classList.remove('tx-enter');
+          last.classList.add('tx-leave');
+          last.addEventListener('animationend', () => last.remove(), {once:true});
+          // also force-remove from layout immediately so count stays correct
+          last.style.overflow = 'hidden';
+          last.style.maxHeight = last.offsetHeight + 'px';
+          last.style.transition = 'max-height 0.4s ease';
+          requestAnimationFrame(() => { last.style.maxHeight = '0'; last.style.padding = '0'; });
+          list.removeChild(last);
+        }
+        const row = createRow();
+        list.prepend(row);
+        // flash the entire table container green
+        const box = document.getElementById('tx-box');
+        box.style.background    = 'hsl(142 70% 35% / 0.18)';
+        box.style.borderColor   = 'hsl(142 70% 45% / 0.6)';
+        setTimeout(() => {
+          box.style.background  = 'hsl(222 47% 8% / 0.9)';
+          box.style.borderColor = 'hsl(222 47% 22% / 0.7)';
+        }, 800);
+      }
+
+      setDateRange();
+      // seed with initial rows
+      for(let i=0;i<MAX;i++) list.append(createRow());
+      const delays = [1000, 5000, 5500, 8000, 8500, 8600, 9000, 15000];
+      function scheduleNext(){
+        const delay = delays[Math.floor(Math.random() * delays.length)];
+        setTimeout(function(){ addRow(); scheduleNext(); }, delay);
+      }
+      scheduleNext();
+    })();
+  </script>
+
+  <!-- Order Customers Slider -->
+  <section class="py-16 sm:py-20 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl md:text-4xl font-bold mb-3">Order <span class="gradient-text">Customers</span></h2>
+        <p class="text-muted-foreground text-sm sm:text-base">See our satisfied customers and their successful transactions.</p>
+      </div>
+      <!-- Slider wrapper -->
+      <div class="relative">
+        <!-- Prev button -->
+        <button id="oc-prev" onclick="ocSlide(-1)" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 z-10 w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background:hsl(222 47% 12%/0.95);border:1px solid hsl(174 72% 50%/0.3);box-shadow:0 0 14px hsl(174 72% 50%/0.15);">
+          <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <!-- Track -->
+        <div class="overflow-hidden rounded-2xl">
+          <div id="oc-track" class="flex gap-4 transition-transform duration-500 ease-in-out">
+            <div class="oc-slide flex-shrink-0 w-[260px] sm:w-[300px] rounded-xl overflow-hidden border border-white/10 hover:border-cyan-500/40 transition-colors cursor-zoom-in" onclick="ocOpen('dist/order-images/Order1.jpg')">
+              <img src="dist/order-images/Order1.jpg" alt="Order 1" class="w-full h-[220px] sm:h-[260px] object-cover object-top" loading="lazy">
+            </div>
+            <div class="oc-slide flex-shrink-0 w-[260px] sm:w-[300px] rounded-xl overflow-hidden border border-white/10 hover:border-cyan-500/40 transition-colors cursor-zoom-in" onclick="ocOpen('dist/order-images/Order2.jpg')">
+              <img src="dist/order-images/Order2.jpg" alt="Order 2" class="w-full h-[220px] sm:h-[260px] object-cover object-top" loading="lazy">
+            </div>
+            <div class="oc-slide flex-shrink-0 w-[260px] sm:w-[300px] rounded-xl overflow-hidden border border-white/10 hover:border-cyan-500/40 transition-colors cursor-zoom-in" onclick="ocOpen('dist/order-images/Order3.jpg')">
+              <img src="dist/order-images/Order3.jpg" alt="Order 3" class="w-full h-[220px] sm:h-[260px] object-cover object-top" loading="lazy">
+            </div>
+            <div class="oc-slide flex-shrink-0 w-[260px] sm:w-[300px] rounded-xl overflow-hidden border border-white/10 hover:border-cyan-500/40 transition-colors cursor-zoom-in" onclick="ocOpen('dist/order-images/Order4.jpg')">
+              <img src="dist/order-images/Order4.jpg" alt="Order 4" class="w-full h-[220px] sm:h-[260px] object-cover object-top" loading="lazy">
+            </div>
+            <div class="oc-slide flex-shrink-0 w-[260px] sm:w-[300px] rounded-xl overflow-hidden border border-white/10 hover:border-cyan-500/40 transition-colors cursor-zoom-in" onclick="ocOpen('dist/order-images/Order5.jpg')">
+              <img src="dist/order-images/Order5.jpg" alt="Order 5" class="w-full h-[220px] sm:h-[260px] object-cover object-top" loading="lazy">
+            </div>
+            <div class="oc-slide flex-shrink-0 w-[260px] sm:w-[300px] rounded-xl overflow-hidden border border-white/10 hover:border-cyan-500/40 transition-colors cursor-zoom-in" onclick="ocOpen('dist/order-images/Order6.jpg')">
+              <img src="dist/order-images/Order6.jpg" alt="Order 6" class="w-full h-[220px] sm:h-[260px] object-cover object-top" loading="lazy">
+            </div>
+            <div class="oc-slide flex-shrink-0 w-[260px] sm:w-[300px] rounded-xl overflow-hidden border border-white/10 hover:border-cyan-500/40 transition-colors cursor-zoom-in" onclick="ocOpen('dist/order-images/Order7.jpg')">
+              <img src="dist/order-images/Order7.jpg" alt="Order 7" class="w-full h-[220px] sm:h-[260px] object-cover object-top" loading="lazy">
+            </div>
+            <div class="oc-slide flex-shrink-0 w-[260px] sm:w-[300px] rounded-xl overflow-hidden border border-white/10 hover:border-cyan-500/40 transition-colors cursor-zoom-in" onclick="ocOpen('dist/order-images/Order8.jpg')">
+              <img src="dist/order-images/Order8.jpg" alt="Order 8" class="w-full h-[220px] sm:h-[260px] object-cover object-top" loading="lazy">
+            </div>
+          </div>
+        </div>
+        <!-- Next button -->
+        <button id="oc-next" onclick="ocSlide(1)" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 z-10 w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background:hsl(222 47% 12%/0.95);border:1px solid hsl(174 72% 50%/0.3);box-shadow:0 0 14px hsl(174 72% 50%/0.15);">
+          <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <!-- Dot indicators -->
+        <div id="oc-dots" class="flex justify-center gap-2 mt-6"></div>
+      </div>
+    </div>
+    <!-- Lightbox -->
+    <div id="oc-lightbox" onclick="ocClose()" class="fixed inset-0 z-[999] flex items-center justify-center bg-black/80 backdrop-blur-sm hidden">
+      <button onclick="ocClose()" class="absolute top-4 right-4 text-white/70 hover:text-white">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <img id="oc-lb-img" src="" alt="" class="max-w-[90vw] max-h-[90vh] rounded-xl shadow-2xl object-contain" onclick="event.stopPropagation()">
+    </div>
+  </section>
+  <script>
+    (function(){
+      const track = document.getElementById('oc-track');
+      const slides = track.querySelectorAll('.oc-slide');
+      const dotsEl = document.getElementById('oc-dots');
+      const slideW = () => slides[0].offsetWidth + 16; // width + gap
+      let idx = 0;
+      const total = slides.length;
+      // build dots
+      slides.forEach((_,i) => {
+        const d = document.createElement('button');
+        d.className = 'w-2 h-2 rounded-full transition-all duration-300';
+        d.style.background = i === 0 ? 'hsl(174,72%,50%)' : 'hsl(222,47%,25%)';
+        d.onclick = () => ocGoTo(i);
+        dotsEl.appendChild(d);
+      });
+      function ocGoTo(n){
+        const maxIdx = total - Math.max(1, Math.floor(track.parentElement.offsetWidth / slideW()));
+        idx = Math.max(0, Math.min(n, maxIdx));
+        track.style.transform = 'translateX(-' + (idx * slideW()) + 'px)';
+        dotsEl.querySelectorAll('button').forEach((d,i) => {
+          d.style.background = i === idx ? 'hsl(174,72%,50%)' : 'hsl(222,47%,25%)';
+          d.style.transform = i === idx ? 'scale(1.3)' : 'scale(1)';
+        });
+      }
+      window.ocSlide = function(dir){ ocGoTo(idx + dir); };
+      // auto-play every 3s
+      setInterval(() => {
+        const maxIdx = total - Math.max(1, Math.floor(track.parentElement.offsetWidth / slideW()));
+        ocGoTo(idx >= maxIdx ? 0 : idx + 1);
+      }, 3000);
+    })();
+    function ocOpen(src){ const lb=document.getElementById('oc-lightbox'); document.getElementById('oc-lb-img').src=src; lb.classList.remove('hidden'); document.body.style.overflow='hidden'; }
+    function ocClose(){ document.getElementById('oc-lightbox').classList.add('hidden'); document.body.style.overflow=''; }
+  </script>
 
   <!-- Testimonials -->
   <section class="py-12 sm:py-20 relative overflow-hidden">
@@ -502,10 +811,10 @@
       </div>
       <!-- Stats -->
       <div class="mt-10 sm:mt-16 grid grid-cols-2 sm:flex sm:flex-wrap justify-center items-center gap-4 sm:gap-8 text-center">
-        <div class="flex flex-col items-center"><span class="text-2xl sm:text-4xl font-bold gradient-text">+500</span><span class="text-muted-foreground text-xs sm:text-sm">Happy Customers</span></div>
-        <div class="flex flex-col items-center"><span class="text-2xl sm:text-4xl font-bold gradient-text">4.9/5</span><span class="text-muted-foreground text-xs sm:text-sm">Average Rating</span></div>
-        <div class="flex flex-col items-center"><span class="text-2xl sm:text-4xl font-bold gradient-text">50+</span><span class="text-muted-foreground text-xs sm:text-sm">Countries Served</span></div>
-        <div class="flex flex-col items-center"><span class="text-2xl sm:text-4xl font-bold gradient-text">24/7</span><span class="text-muted-foreground text-xs sm:text-sm">Support Available</span></div>
+        <div class="flex flex-col items-center"><span class="text-2xl sm:text-4xl font-bold gradient-text zoom-pulse">+500</span><span class="text-muted-foreground text-xs sm:text-sm">Happy Customers</span></div>
+        <div class="flex flex-col items-center"><span class="text-2xl sm:text-4xl font-bold gradient-text zoom-pulse">4.9/5</span><span class="text-muted-foreground text-xs sm:text-sm">Average Rating</span></div>
+        <div class="flex flex-col items-center"><span class="text-2xl sm:text-4xl font-bold gradient-text zoom-pulse">50+</span><span class="text-muted-foreground text-xs sm:text-sm">Countries Served</span></div>
+        <div class="flex flex-col items-center"><span class="text-2xl sm:text-4xl font-bold gradient-text zoom-pulse">24/7</span><span class="text-muted-foreground text-xs sm:text-sm">Support Available</span></div>
       </div>
     </div>
   </section>
@@ -518,30 +827,137 @@
         <p class="text-muted-foreground max-w-2xl mx-auto">Common questions about USDT TRC20 flash transfers, wallets, and validity</p>
       </header>
       <div class="max-w-3xl mx-auto space-y-4">
+        <!-- Q1 -->
         <details class="glass-card rounded-xl group" open>
           <summary class="flex items-center justify-between cursor-pointer px-6 py-6 font-semibold text-foreground">What is USDT Flash? <svg class="chevron w-4 h-4 text-muted-foreground transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary>
-          <div class="px-6 pb-6 text-muted-foreground">TRC20 Network, 180 Day Validity, Unlimited Transfer. USDT Flash is a fast TRC20 USDT transfer service with 180-day validity and unlimited transfers. Balance is verifiable on blockchain and works with Trust Wallet, Binance, Coinbase, OKX, Bybit, and more wallets.</div>
+          <div class="px-6 pb-6 text-muted-foreground text-sm leading-relaxed">
+            <p class="flex flex-wrap gap-x-3 gap-y-1">
+              <span>✅ TRC20 Network</span><span>•</span>
+              <span>✅ 180 Day Validity</span><span>•</span>
+              <span>✅ Unlimited Transfer</span><span>•</span>
+              <span>✅ Transfers confirmed</span><span>•</span>
+              <span>✅ Balance Verifiable</span><span>•</span>
+              <span>✅ Transaction hash provided</span><span>•</span>
+              <span>✅ Support Wallets (Trust wallet, Safepal, Binance web3, Bybit web3, Okx, Coinbase wallet, Bitget wallet)</span>
+            </p>
+          </div>
         </details>
+
+        <!-- Q2 -->
         <details class="glass-card rounded-xl group">
           <summary class="flex items-center justify-between cursor-pointer px-6 py-6 font-semibold text-foreground">How long does it take for USDT to reach my wallet? <svg class="chevron w-4 h-4 text-muted-foreground transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary>
-          <div class="px-6 pb-6 text-muted-foreground">Immediately after receive payment, Send USDT flash TRC20 to your address USDT TRC20. Your transactions are processed and confirmed immediately on Tronscan.</div>
+          <div class="px-6 pb-6 text-muted-foreground text-sm">Immediately after receiving payment, USDT Flash TRC20 is sent to your wallet address. Your transactions are processed and confirmed immediately on Tronscan.</div>
         </details>
+
+        <!-- Q3 — Wallets with logos -->
         <details class="glass-card rounded-xl group">
           <summary class="flex items-center justify-between cursor-pointer px-6 py-6 font-semibold text-foreground">What wallets are supported? <svg class="chevron w-4 h-4 text-muted-foreground transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary>
-          <div class="px-6 pb-6 text-muted-foreground">USDT Flash supports all TRC20 compatible wallets including Trust Wallet, SafePal, Binance Web3, Bybit Web3, OKX, Coinbase Wallet, Bitget Wallet, Exodus, Ledger, and Trezor.</div>
+          <div class="px-6 pb-6">
+            <p class="text-sm text-muted-foreground mb-4 flex items-center gap-2"><span class="text-base">✅</span> <span class="font-semibold text-foreground">Support Wallets:</span></p>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <div class="flex items-center gap-3 bg-white/5 rounded-xl px-4 py-3">
+                <img src="dist/images/wallet-trust.png" alt="Trust Wallet" class="w-8 h-8 object-contain flex-shrink-0">
+                <span class="text-sm font-medium text-foreground">Trust Wallet</span>
+              </div>
+              <div class="flex items-center gap-3 bg-white/5 rounded-xl px-4 py-3">
+                <img src="dist/images/Safepal.png" alt="Safepal" class="w-8 h-8 object-contain flex-shrink-0">
+                <span class="text-sm font-medium text-foreground">Safepal</span>
+              </div>
+              <div class="flex items-center gap-3 bg-white/5 rounded-xl px-4 py-3">
+                <img src="dist/images/Binance.png" alt="Binance Web3" class="w-8 h-8 object-contain flex-shrink-0">
+                <span class="text-sm font-medium text-foreground">Binance Web3</span>
+              </div>
+              <div class="flex items-center gap-3 bg-white/5 rounded-xl px-4 py-3">
+                <img src="dist/images/Bybit.png" alt="Bybit Web3" class="w-8 h-8 object-contain flex-shrink-0">
+                <span class="text-sm font-medium text-foreground">Bybit Web3</span>
+              </div>
+              <div class="flex items-center gap-3 bg-white/5 rounded-xl px-4 py-3">
+                <img src="dist/images/OKX.png" alt="OKX" class="w-8 h-8 object-contain flex-shrink-0">
+                <span class="text-sm font-medium text-foreground">OKX</span>
+              </div>
+              <div class="flex items-center gap-3 bg-white/5 rounded-xl px-4 py-3">
+                <img src="dist/images/Coinbase.png" alt="Coinbase Wallet" class="w-8 h-8 object-contain flex-shrink-0">
+                <span class="text-sm font-medium text-foreground">Coinbase Wallet</span>
+              </div>
+              <div class="flex items-center gap-3 bg-white/5 rounded-xl px-4 py-3">
+                <img src="dist/images/Bitget.png" alt="Bitget Wallet" class="w-8 h-8 object-contain flex-shrink-0">
+                <span class="text-sm font-medium text-foreground">Bitget Wallet</span>
+              </div>
+            </div>
+            <p class="text-sm text-muted-foreground mt-4">and more...</p>
+          </div>
         </details>
+
+        <!-- Q4 -->
         <details class="glass-card rounded-xl group">
           <summary class="flex items-center justify-between cursor-pointer px-6 py-6 font-semibold text-foreground">Is your service secure? <svg class="chevron w-4 h-4 text-muted-foreground transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary>
-          <div class="px-6 pb-6 text-muted-foreground">Yes, we use the most advanced security protocols. All transactions are encrypted and confirmed on Tronscan with full transaction hash verification.</div>
+          <div class="px-6 pb-6 text-muted-foreground text-sm">Yes, we use the most advanced security protocols. All transactions are encrypted and confirmed on Tronscan with full transaction hash verification.</div>
         </details>
+
+        <!-- Q5 -->
         <details class="glass-card rounded-xl group">
           <summary class="flex items-center justify-between cursor-pointer px-6 py-6 font-semibold text-foreground">Do you offer a money-back guarantee? <svg class="chevron w-4 h-4 text-muted-foreground transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary>
-          <div class="px-6 pb-6 text-muted-foreground">Yes, we offer a 24-hour money back guarantee. If you're not satisfied with the service, contact our support team for a full refund.</div>
+          <div class="px-6 pb-6 text-sm">
+            <p class="mb-2">✅ Yes! We offer a <span class="text-emerald-400 font-semibold">24-Hour Money Back Guarantee</span> on all orders.</p>
+            <p class="text-muted-foreground mb-4">If you're not satisfied with your purchase, contact our support team within 24 hours for a full refund.</p>
+            <div class="flex items-center gap-3 flex-wrap">
+              <span class="text-muted-foreground">Contact support:</span>
+              <a href="https://wa.me/+8801757054846" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-semibold px-4 py-2 rounded-lg text-sm transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+                WhatsApp
+              </a>
+              <a href="https://t.me/+8801757054846" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-[#0088cc] hover:bg-[#0077bb] text-white font-semibold px-4 py-2 rounded-lg text-sm transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                Telegram
+              </a>
+            </div>
+          </div>
         </details>
+
+        <!-- Q6 -->
         <details class="glass-card rounded-xl group">
           <summary class="flex items-center justify-between cursor-pointer px-6 py-6 font-semibold text-foreground">How can I get support? <svg class="chevron w-4 h-4 text-muted-foreground transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary>
-          <div class="px-6 pb-6 text-muted-foreground">Our support team is available 24/7 via WhatsApp and Telegram. Contact us anytime for instant assistance with your USDT TRC20 purchase.</div>
+          <div class="px-6 pb-6 text-muted-foreground text-sm">Our support team is available 24/7 via WhatsApp and Telegram. Contact us anytime for instant assistance with your USDT TRC20 purchase.</div>
         </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ready to Buy CTA Section -->
+  <section class="py-16 px-4">
+    <div class="max-w-3xl mx-auto">
+      <div class="glass-card rounded-[2rem] p-10 sm:p-14 text-center" style="border:1px solid hsl(174 72% 50%/0.18);">
+        <!-- Icon -->
+        <div class="flex justify-center mb-6">
+          <div class="w-16 h-16 rounded-2xl flex items-center justify-center" style="background:linear-gradient(135deg,hsl(174,72%,50%),hsl(199,89%,48%));">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+          </div>
+        </div>
+        <!-- Heading -->
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
+          Ready to Buy <span class="gradient-text">USDT Flash</span>?
+        </h2>
+        <!-- Subtitle -->
+        <p class="text-muted-foreground text-base sm:text-lg mb-8 max-w-lg mx-auto">
+          Contact our support team via WhatsApp or Telegram for instant assistance with your USDT TRC20 purchase.
+        </p>
+        <!-- Buttons row 1 -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="#pricing" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-bold text-base text-white transition-all hover:scale-105 hover:shadow-lg" style="background:linear-gradient(135deg,hsl(174,72%,50%),hsl(199,89%,48%));box-shadow:0 0 20px hsl(174 72% 50%/0.3);">
+            Start Buying <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+          <a href="https://wa.me/+8801757054846" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-bold text-base text-foreground transition-all hover:scale-105 border border-border/60 hover:border-cyan-500/40" style="background:hsl(222 47% 10%/0.8);">
+            <svg class="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+            Contact on WhatsApp
+          </a>
+        </div>
+        <!-- Button row 2 -->
+        <div class="flex justify-center mt-4">
+          <a href="https://t.me/+8801757054846" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-bold text-base text-foreground transition-all hover:scale-105 border border-border/60 hover:border-cyan-500/40" style="background:hsl(222 47% 10%/0.8);">
+            <svg class="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+            Contact on Telegram
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -768,6 +1184,152 @@
         window.open('https://wa.me/+8801757054846?text=' + msg, '_blank');
       }, 1500);
     }
+  </script>
+
+  <script>
+    function updateNavClock() {
+      const now = new Date();
+      // Date: Wednesday, February 25, 2026
+      const dateStr = now.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      // Time: 05:11 London
+      const timeStr = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/London' }) + ' London';
+      document.getElementById('nav-date').textContent = dateStr;
+      document.getElementById('nav-time').textContent = timeStr;
+    }
+    updateNavClock();
+    setInterval(updateNavClock, 1000);
+  </script>
+
+  <style>
+    .active-cur {
+      background: linear-gradient(135deg, hsl(174,72%,50%), hsl(199,89%,48%));
+      color: hsl(222,47%,6%);
+      box-shadow: 0 0 20px hsl(174 72% 50% / 0.35);
+    }
+  </style>
+
+  <script>
+    let activeCurrency = 'usdt';
+
+    function switchCurrency(cur, btn) {
+      activeCurrency = cur;
+      // update tab styles
+      document.querySelectorAll('.cur-tab').forEach(t => {
+        t.classList.remove('active-cur');
+        t.classList.add('text-muted-foreground');
+        t.classList.remove('text-foreground');
+      });
+      btn.classList.add('active-cur');
+      btn.classList.remove('text-muted-foreground');
+
+      const label = cur === 'usdt' ? 'USDT' : cur === 'xrp' ? 'XRP' : 'DOGE';
+
+      // update all price values with a flip animation
+      document.querySelectorAll('.price-val').forEach(el => {
+        el.style.transition = 'opacity 0.2s, transform 0.2s';
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(-8px)';
+        setTimeout(() => {
+          el.textContent = el.dataset[cur];
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        }, 200);
+      });
+
+      // update all currency labels
+      document.querySelectorAll('.price-cur').forEach(el => {
+        el.textContent = label;
+      });
+
+      // update all Select Plan buttons
+      document.querySelectorAll('.pay-btn').forEach(btn => {
+        const price  = btn.dataset[cur];
+        const plan   = btn.dataset.plan;
+        const amount = btn.dataset.amount;
+        btn.onclick = () => openPayModal(plan, price, amount);
+      });
+    }
+
+    // initialise button onclick for default USDT
+    document.querySelectorAll('.pay-btn').forEach(btn => {
+      btn.onclick = () => openPayModal(btn.dataset.plan, btn.dataset.usdt, btn.dataset.amount);
+    });
+  </script>
+
+  <!-- Transaction Popup -->
+  <div id="tx-popup" style="
+    position:fixed; bottom:1.5rem; left:1.5rem; z-index:9999;
+    width:260px; background:hsl(222 47% 10%/0.97);
+    border:1px solid hsl(142 70% 45%/0.35);
+    border-radius:1rem; padding:1rem 1rem 0.85rem;
+    box-shadow:0 8px 40px hsl(142 70% 30%/0.18);
+    transform:translateX(calc(-100% - 2rem));
+    transition:transform 0.5s cubic-bezier(.34,1.56,.64,1);
+    backdrop-filter:blur(16px);
+  ">
+    <button onclick="document.getElementById('tx-popup').style.transform='translateX(calc(-100% - 2rem))'"
+      style="position:absolute;top:0.6rem;right:0.7rem;background:none;border:none;color:#64748b;cursor:pointer;font-size:1rem;line-height:1;">✕</button>
+    <div style="display:flex;align-items:flex-start;gap:0.75rem;">
+      <div style="width:2.4rem;height:2.4rem;border-radius:50%;background:hsl(142 70% 40%/0.2);border:2px solid hsl(142 70% 45%/0.5);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.1rem;">
+        <svg style="width:1rem;height:1rem;color:#4ade80;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.8" d="M5 13l4 4L19 7"/></svg>
+      </div>
+      <div>
+        <p id="popup-customer" style="font-weight:700;font-size:0.9rem;color:#f1f5f9;line-height:1.3;"></p>
+        <p style="font-size:0.78rem;color:#94a3b8;margin-top:0.1rem;">Bought <span id="popup-amount" style="background:linear-gradient(135deg,hsl(174,72%,50%),hsl(199,89%,48%));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:700;"></span></p>
+        <p style="font-size:0.72rem;color:#64748b;margin-top:0.1rem;">Today</p>
+      </div>
+    </div>
+    <div style="margin-top:0.75rem;padding-top:0.65rem;border-top:1px solid hsl(222 47% 20%/0.6);">
+      <p style="font-size:0.72rem;color:#94a3b8;">✨ Successful Transaction</p>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const customers = [
+        { flag:'🇵🇰', name:'Pakistan',   code:'PK' },
+        { flag:'🇦🇪', name:'UAE',        code:'AE' },
+        { flag:'🇺🇸', name:'USA',        code:'US' },
+        { flag:'🇬🇧', name:'UK',         code:'GB' },
+        { flag:'🇩🇪', name:'Germany',    code:'DE' },
+        { flag:'🇨🇳', name:'China',      code:'CN' },
+        { flag:'🇯🇵', name:'Japan',      code:'JP' },
+        { flag:'🇧🇷', name:'Brazil',     code:'BR' },
+        { flag:'🇨🇦', name:'Canada',     code:'CA' },
+        { flag:'🇦🇺', name:'Australia',  code:'AU' },
+        { flag:'🇸🇬', name:'Singapore',  code:'SG' },
+        { flag:'🇫🇷', name:'France',     code:'FR' },
+        { flag:'🇳🇱', name:'Netherlands',code:'NL' },
+        { flag:'🇿🇦', name:'S. Africa',  code:'ZA' },
+        { flag:'🇰🇷', name:'S. Korea',   code:'KR' },
+        { flag:'🇮🇳', name:'India',      code:'IN' },
+        { flag:'🇹🇷', name:'Turkey',     code:'TR' },
+        { flag:'🇳🇬', name:'Nigeria',    code:'NG' },
+      ];
+      const amounts = ['10K USDT','20K USDT','50K USDT','100K USDT','1M USDT'];
+
+      function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+      function showPopup(){
+        const c = pick(customers);
+        const a = pick(amounts);
+        document.getElementById('popup-customer').textContent = 'Customer (' + c.flag + ' ' + c.name + ' IP)';
+        document.getElementById('popup-amount').textContent   = a;
+        const popup = document.getElementById('tx-popup');
+        // slide in
+        popup.style.transform = 'translateX(0)';
+        // slide out after 5s
+        setTimeout(() => {
+          popup.style.transform = 'translateX(calc(-100% - 2rem))';
+        }, 5000);
+      }
+
+      // first show after 3s, then repeat every 3 minutes
+      setTimeout(function loop(){
+        showPopup();
+        setTimeout(loop, 3 * 60 * 1000);
+      }, 3000);
+    })();
   </script>
 
 </body>
